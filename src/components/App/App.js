@@ -5,7 +5,7 @@ import TicketFilter from '../TicketFilter';
 import Head from '../Head';
 import CardList from '../CardList';
 import ButtonShowMore from '../ButtonShowMore';
-import Logo from '../../img/Logo.png';
+import Logo from '../../img/Logo.svg';
 import ticketLoad from '../../actions/asyncActions';
 
 import classes from './App.module.scss';

@@ -48,7 +48,7 @@ function Card({ price, carrier, segmentsThere, segmentsBack }) {
     <div className={classes.card}>
       <div className={classes['header-card']}>
         <span className={classes.price}>{formatPrice(price)} P</span>
-        <img src={`//pics.avs.io/99/36/${carrier}.png`} alt="logo S7" width={110} />
+        <img src={`//pics.avs.io/99/36/${carrier}.png`} alt="logo carrier" width={99} />
       </div>
       <div className={classes.detail}>
         <div className={classes.flight}>
