@@ -1,0 +1,40 @@
+.app {
+  background-color: #f3f7fa;
+  min-height: 100vh;
+
+  .wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+
+  .main {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .main-content {
+    width: 502px;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .app {
+    .main-content {
+      width: 100%;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}

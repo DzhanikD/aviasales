@@ -1,0 +1,19 @@
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.error {
+  margin-bottom: 20px;
+}
