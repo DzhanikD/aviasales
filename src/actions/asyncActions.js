@@ -1,4 +1,4 @@
-import { error, loadingTickets, status } from './actions';
+import { error, loadingTickets } from './actions';
 
 function idForTickets(tickets) {
   const newTickets = tickets.map((el) => ({ ...el, id: crypto.randomUUID() }));
@@ -25,6 +25,7 @@ function ticketLoad() {
           if (!tickets.ok && tickets.status !== 500) {
             dispatch(error());
           }
+
           const jsonTickets = await tickets.json();
           stop = jsonTickets.stop;
           const newJsonTickets = idForTickets(jsonTickets.tickets);
@@ -32,9 +33,6 @@ function ticketLoad() {
             type: 'TICKET_LOAD',
             tickets: newJsonTickets,
           });
-          if (!navigator.onLine) {
-            dispatch(status());
-          }
         } catch (e) {
           stop = false;
         }

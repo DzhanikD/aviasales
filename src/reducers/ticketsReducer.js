@@ -5,7 +5,6 @@ const initialState = {
   spinner: true,
   visibleTickets: 5,
   error: false,
-  onLine: true,
 };
 
 const ticketsReducer = (state = initialState, action) => {
@@ -58,13 +57,6 @@ const ticketsReducer = (state = initialState, action) => {
       return {
         ...state,
         loaderProgress: 100,
-      };
-    }
-
-    case 'STATUS': {
-      return {
-        ...state,
-        onLine: false,
       };
     }
 
