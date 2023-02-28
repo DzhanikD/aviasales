@@ -1,5 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { Offline } from 'react-detect-offline';
+import { Alert } from 'antd';
 
 import TicketFilter from '../TicketFilter';
 import Head from '../Head';
@@ -17,20 +19,31 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className={classes.app}>
-      <div className={classes.wrapper}>
-        <header className={classes.logo}>
-          <img src={Logo} alt="AviaSales" />
-        </header>
-        <main className={classes.main}>
-          <TicketFilter />
-          <div className={classes['main-content']}>
-            <Head />
-            <CardList />
-          </div>
-        </main>
+    <>
+      <Offline>
+        <Alert
+          message="Warning"
+          description="Сеть пропала! Поиск может быть не полным, пожалуйста, проверьте ваше интернет-соединение."
+          type="warning"
+          showIcon
+          closable
+        />
+      </Offline>
+      <div className={classes.app}>
+        <div className={classes.wrapper}>
+          <header className={classes.logo}>
+            <img src={Logo} alt="AviaSales" />
+          </header>
+          <main className={classes.main}>
+            <TicketFilter />
+            <div className={classes['main-content']}>
+              <Head />
+              <CardList />
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

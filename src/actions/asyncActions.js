@@ -1,5 +1,3 @@
-// import { useSelector } from 'react-redux';
-
 import { error, loadingTickets } from './actions';
 
 function idForTickets(tickets) {
