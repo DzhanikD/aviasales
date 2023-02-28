@@ -68,3 +68,9 @@ export function loadingTickets() {
     type: 'LOADING_TICKETS',
   };
 }
+
+export function status() {
+  return {
+    type: 'STATUS',
+  };
+}
