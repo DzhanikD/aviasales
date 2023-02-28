@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import TicketFilter from '../TicketFilter';
 import Head from '../Head';
 import CardList from '../CardList';
-import ButtonShowMore from '../ButtonShowMore';
 import Logo from '../../img/Logo.svg';
 import ticketLoad from '../../actions/asyncActions';
 
@@ -28,7 +27,6 @@ function App() {
           <div className={classes['main-content']}>
             <Head />
             <CardList />
-            <ButtonShowMore />
           </div>
         </main>
       </div>

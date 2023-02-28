@@ -2,6 +2,7 @@ import LoadingBar from 'react-top-loading-bar';
 import { useSelector } from 'react-redux';
 import { Alert, Spin } from 'antd';
 
+import ButtonShowMore from '../ButtonShowMore';
 import Card from '../Card';
 
 import classes from './CardList.module.scss';
@@ -12,19 +13,11 @@ function CardList() {
   const transfers = useSelector((state) => state.checkboxReducer);
   const loaderProgress = useSelector((state) => state.ticketsReducer.loaderProgress);
   function checkboxTickets(tickets) {
-    const arrValuesTransfers = Object.values(transfers).flat(1);
-    if (!arrValuesTransfers.includes(true)) {
-      return tickets;
-    }
-
     const activeValuesTransfers = [];
-    const activeNonStopTransfers = [];
 
     Object.keys(transfers).forEach((el) => {
       if (transfers[el][0] === true) {
-        if (el === 'nonStop') {
-          activeNonStopTransfers.push(transfers[el][1]);
-        } else activeValuesTransfers.push(transfers[el][1]);
+        activeValuesTransfers.push(transfers[el][1]);
       }
     });
 
@@ -32,12 +25,6 @@ function CardList() {
       if (
         activeValuesTransfers.includes(ticket.segments[0].stops.length) ||
         activeValuesTransfers.includes(ticket.segments[1].stops.length)
-      )
-        return true;
-
-      if (
-        activeNonStopTransfers.includes(ticket.segments[0].stops.length) &&
-        activeNonStopTransfers.includes(ticket.segments[1].stops.length)
       )
         return true;
 
@@ -70,6 +57,12 @@ function CardList() {
     }
   }
 
+  function searchIncludedCheckboxes(checkboxes) {
+    return Object.values(checkboxes).flat(1).includes(true);
+  }
+
+  const searchIncluded = searchIncludedCheckboxes(transfers);
+
   const visibleTickets = checkboxTickets(sortTickets(stateTickets.tickets));
 
   const loader = stateTickets.spinner ? <Spin size="large" className={classes.spinner} /> : null;
@@ -83,23 +76,31 @@ function CardList() {
     />
   ) : null;
 
+  const messageNotResults =
+    !loader && !error && (visibleTickets.length === 0 || !searchIncluded) ? (
+      <div className={classes['no-flights']}> Рейсов, подходящих под заданные фильтры, не найдено</div>
+    ) : null;
+
   const content =
-    !stateTickets.spinner && !error ? (
-      <ul className={classes['card-list']}>
-        <LoadingBar color="#7B68EE" progress={loaderProgress} loaderSpeed={1000} />
-        {visibleTickets.map((el, index) =>
-          index < stateTickets.visibleTickets ? (
-            <li key={el.id}>
-              <Card
-                price={el.price}
-                carrier={el.carrier}
-                segmentsThere={el.segments[0]}
-                segmentsBack={el.segments[1]}
-              />
-            </li>
-          ) : null
-        )}
-      </ul>
+    !stateTickets.spinner && !error && searchIncluded && visibleTickets.length !== 0 ? (
+      <>
+        <ul className={classes['card-list']}>
+          <LoadingBar color="#7B68EE" progress={loaderProgress} loaderSpeed={1000} />
+          {visibleTickets.map((el, index) =>
+            index < stateTickets.visibleTickets ? (
+              <li key={el.id}>
+                <Card
+                  price={el.price}
+                  carrier={el.carrier}
+                  segmentsThere={el.segments[0]}
+                  segmentsBack={el.segments[1]}
+                />
+              </li>
+            ) : null
+          )}
+        </ul>
+        <ButtonShowMore />
+      </>
     ) : null;
 
   return (
@@ -107,6 +108,7 @@ function CardList() {
       {content}
       {loader}
       {error}
+      {messageNotResults}
     </>
   );
 }

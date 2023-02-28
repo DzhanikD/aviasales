@@ -1,9 +1,9 @@
 const initialState = {
-  all: false,
-  nonStop: [false, 0],
-  oneTransfer: [false, 1],
-  twoTransfers: [false, 2],
-  threeTransfers: [false, 3],
+  all: true,
+  nonStop: [true, 0],
+  oneTransfer: [true, 1],
+  twoTransfers: [true, 2],
+  threeTransfers: [true, 3],
 };
 
 const checkboxReducer = (state = initialState, action) => {

@@ -1,3 +1,5 @@
+// import { useSelector } from 'react-redux';
+
 import { error, loadingTickets } from './actions';
 
 function idForTickets(tickets) {
@@ -9,6 +11,7 @@ function ticketLoad() {
   return async (dispatch) => {
     let stop;
     let jsonSearchID = '';
+    let tickets;
 
     try {
       const searchID = await fetch('https://aviasales-test-api.kata.academy/search');
@@ -20,9 +23,10 @@ function ticketLoad() {
     if (jsonSearchID.length !== 0) {
       do {
         try {
-          const tickets = await fetch(
-            `https://aviasales-test-api.kata.academy/tickets?searchId=${jsonSearchID.searchId}`
-          );
+          tickets = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${jsonSearchID.searchId}`);
+          if (!tickets.ok && tickets.status !== 500) {
+            dispatch(error());
+          }
           const jsonTickets = await tickets.json();
           stop = jsonTickets.stop;
           const newJsonTickets = idForTickets(jsonTickets.tickets);
@@ -33,7 +37,7 @@ function ticketLoad() {
         } catch (e) {
           stop = false;
         }
-      } while (!stop);
+      } while (!stop && navigator.onLine && (tickets.ok || tickets.status === 500));
 
       dispatch(loadingTickets());
     }
